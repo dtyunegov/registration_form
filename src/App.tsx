@@ -26,13 +26,13 @@ function App() {
         if (!value.match(/^((\w|\s)+)$/g)) setValidation({ ...validation, [name]: 'Login is incorrect' })
         break
       case "email":
-        if (!value.match(/\S{2,}@\S{1,}(\.\S{1,}){1,}/g) || [...value].filter(s => s == '@').length > 1 || value.indexOf('..') > -1) setValidation({ ...validation, [name]: 'Email is incorrect' })
+        if (!value.match(/\S{2,}@\S{1,}(\.\S{1,}){1,}/g) || [...value].filter(s => s === '@').length > 1 || value.indexOf('..') > -1) setValidation({ ...validation, [name]: 'Email is incorrect' })
         break
       case "password":
         if (!value.match(/(?=.*[0-9])(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{6,}/g)) setValidation({ ...validation, [name]: 'Password is incorrect' })
         break
       case "confirmPassword":
-        if (values.password != value) setValidation({ ...validation, [name]: 'Passwords do not match' })
+        if (values.password !== value) setValidation({ ...validation, [name]: 'Passwords do not match' })
         break
     }
   }
