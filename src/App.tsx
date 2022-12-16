@@ -17,6 +17,8 @@ function App() {
     confirmPassword: "",
   })
 
+  const [isSuccessAlert, setAlert] = useState(false)
+
   function handleChange(event: any) {
     const { name, value } = event.target
     setInputValue({ ...values, [name]: value })
@@ -49,15 +51,18 @@ function App() {
     if (!values.confirmPassword.trim()) validation.confirmPassword = 'Confirm password is required'
 
     const preventDefault = Object.entries(validation).some(e => e[1])
-    if (preventDefault) event.preventDefault()
-    else alert("Success")
-
+    if (!preventDefault) setAlert(true)
+    else setAlert(false)
     setValidation({ ...validation })
   }
 
   return (
     <div className='flex justify-center w-screen h-screen' style={{ background: `url(${background})`, backgroundRepeat: 'no-repeat', backgroundSize: "cover" }}>
-      <form className='p-10 w-96 bg-white place-self-center rounded-xl flex flex-col'>
+      {isSuccessAlert && <div className="absolute p-4 mb-4 text-sm text-green-700 bg-green-100 rounded-lg dark:bg-green-200 dark:text-green-800" role="alert">
+        <span className="font-medium">Success registration!</span>
+      </div>
+      }
+      <div className='p-10 w-96 bg-white place-self-center rounded-xl flex flex-col'>
         <p className='text-2xl'>Create an account</p>
         <p className='text-md text-slate-400'>Let’s get started with your 30 days free trial</p>
         <input
@@ -100,8 +105,8 @@ function App() {
         {validation.confirmPassword && <p className='text-red-600'>{validation.confirmPassword}</p>}
         <button className='mt-5 bg-teal-500 text-2xl text-slate-100 h-11 rounded-lg font-bold hover:bg-teal-600 active:bg-teal-700'
           onClick={handleSubmit}>Sign up</button>
-      </form>
-    </div> 
+      </div>
+    </div>
   )
 }
 
